@@ -10,7 +10,7 @@ body {
 
 .high-score {
     position: absolute;
-    margin-left: 230px;
+    margin-left: 200px;
 }
 
 h1 {
@@ -134,7 +134,7 @@ h2 {
 @media only screen and (max-width: 325px) {
 
     .high-score {
-        margin-left: 170px;
+        margin-left: 160px;
     }
 
 }
