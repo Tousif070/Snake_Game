@@ -95,22 +95,30 @@ function generateFood()
 
     squares[foodIndex].classList.add("food");
 
-    if(foodIndex % 4 == 0)
+    if(foodIndex % 4 == 0 && !squares[bonusFoodIndex1].classList.contains("bonus-food-1"))
     {
         do {
             bonusFoodIndex1=Math.floor(Math.random() * squares.length);
         } while(squares[bonusFoodIndex1].classList.contains("snake") || squares[bonusFoodIndex1].classList.contains("food") || squares[bonusFoodIndex1].classList.contains("bonus-food-1") || squares[bonusFoodIndex1].classList.contains("bonus-food-2"));
 
         squares[bonusFoodIndex1].classList.add("bonus-food-1");
+
+        setTimeout(() => {
+            squares[bonusFoodIndex1].classList.remove("bonus-food-1");
+        }, 7000);
     }
 
-    if(foodIndex % 5 == 0)
+    if(foodIndex % 5 == 0 && !squares[bonusFoodIndex2].classList.contains("bonus-food-2"))
     {
         do {
             bonusFoodIndex2=Math.floor(Math.random() * squares.length);
         } while(squares[bonusFoodIndex2].classList.contains("snake") || squares[bonusFoodIndex2].classList.contains("food") || squares[bonusFoodIndex2].classList.contains("bonus-food-1") || squares[bonusFoodIndex2].classList.contains("bonus-food-2"));
 
         squares[bonusFoodIndex2].classList.add("bonus-food-2");
+
+        setTimeout(() => {
+            squares[bonusFoodIndex2].classList.remove("bonus-food-2");
+        }, 7000);
     }
 }
 
@@ -308,11 +316,11 @@ downBtn.addEventListener("click", () => {
 infoBtn.addEventListener("click", () => {
     alert(
         "Brown Berry -\n" +
-        "Points: 4, Speed Increase: 1x, Length Increase: + 1\n" +
+        "Points: 4, Speed: Increase by + 1, Length: Increase by + 1.\n" +
         "Blue Berry -\n" +
-        "Points: 16, Length Decrease: - 4\n" +
+        "Points: 16, Length: Decrease by - 4, Time: 7 Seconds.\n" +
         "Violet Berry -\n" +
-        "Points: 32, Speed Decrease: 2x, Length Increase: + 1"
+        "Points: 32, Speed: Decrease by + 2, Length: Increase by + 1, Time: 7 Seconds."
     );
 });
 
