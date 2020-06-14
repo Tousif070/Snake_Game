@@ -243,7 +243,7 @@ function gameOver()
     highScore=getHighScoreFromCookie();
     if(score > highScore) // SAVING THE NEW HIGH SCORE IN JAVASCRIPT COOKIE
     {
-        setHighScoreInCookie("highScore", score, 90);
+        setHighScoreInCookie("snakeHighScoreGame2", score, 90);
         displayHighScore.innerHTML=score;
         displayHighScoreView.style.color="#FFF6EB";
         setTimeout(() => {
