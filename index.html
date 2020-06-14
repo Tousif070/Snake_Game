@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <title>Snake</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body onload="displayHighScoreOnScreen()">
+
+        <h1>Snake</h1>
+
+        <div class="board">
+            <h2>Score: <span id="displayScore">0</span></h2>
+            <h2 id="displayHighScoreView" class="high-score">High Score: <span id="displayHighScore"></span></h2>
+        </div>
+
+        <div class="grid">
+
+            <script>
+                for(let i=0; i<900; i++)
+                {
+                    document.write("<div class='grid-blocks'></div>");
+                }
+            </script>
+
+        </div>
+
+        <table class="table-for-buttons">
+            <tr>
+                <td colspan="2" align="center">
+                    <button id="startOrPauseBtn" class="button button-accent" style="width: 150px; margin-left: 40px;">Start / Pause</button>
+                    <button id="infoBtn" class="info-button">i</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" align="center">
+                    <button id="upBtn" class="button button-accent">Up</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td align="right">
+                    <button id="leftBtn" class="button button-accent" style="margin-right: 40px;">Left</button>
+                </td>
+                <td>
+                    <button id="rightBtn" class="button button-accent" style="margin-left: 40px;">Right</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" align="center">
+                    <button id="downBtn" class="button button-accent">Down</button>
+                </td>
+            </tr>
+        </table>
+
+    </body>
+
+    <script src="app.js"></script>
+
+</html>
