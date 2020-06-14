@@ -338,8 +338,16 @@ function getHighScoreFromCookie()
     if(document.cookie != null && document.cookie != "")
     {
         let retrievedCookie=document.cookie;
-        let cookieArr=retrievedCookie.split("=");
-        highScoreFromCookie=cookieArr[1];
+        let cookieArr=retrievedCookie.split("; ");
+        for(let i=0; i<cookieArr.length; i++)
+        {
+            let part=cookieArr[i].split("=");
+            if(part[0] == "snakeHighScoreGame2")
+            {
+                highScoreFromCookie=part[1];
+                break;
+            }
+        }
     }
     return highScoreFromCookie;
 }
