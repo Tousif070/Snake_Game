@@ -6,8 +6,14 @@ const displayHighScoreView=document.getElementById("displayHighScoreView"); // T
 const width=30;
 let snake=[255, 254, 253, 252, 251, 250];
 let foodIndex=0;
-let bonusFoodIndex1=0;
-let bonusFoodIndex2=0;
+let bonusFoodIndex1=-1;
+let bonusFoodIndex2=-1;
+let tempBonusFoodIndex1=-1;
+let tempBonusFoodIndex2=-1;
+let bonusFoodIndex1TimerID=null;
+let bonusFoodIndex2TimerID=null;
+let tempTimer1=null;
+let tempTimer2=null;
 let direction=1;
 let previousDirection=0;
 let keyPressTime=99999;
@@ -41,6 +47,8 @@ function newGame()
     previousKeyPressTime=0;
     snake=[255, 254, 253, 252, 251, 250];
     snake.forEach(value => squares[value].classList.add("snake"));
+    bonusFoodIndex1=-1;
+    bonusFoodIndex2=-1;
     generateFood();
     timeInterval=300;
 }
@@ -95,7 +103,7 @@ function generateFood()
 
     squares[foodIndex].classList.add("food");
 
-    if(foodIndex % 4 == 0 && !squares[bonusFoodIndex1].classList.contains("bonus-food-1"))
+    if(foodIndex % 4 == 0 && bonusFoodIndex1 == -1)
     {
         do {
             bonusFoodIndex1=Math.floor(Math.random() * squares.length);
@@ -103,12 +111,16 @@ function generateFood()
 
         squares[bonusFoodIndex1].classList.add("bonus-food-1");
 
-        setTimeout(() => {
-            squares[bonusFoodIndex1].classList.remove("bonus-food-1");
+        bonusFoodIndex1TimerID=setTimeout(() => {
+            if(squares[bonusFoodIndex1].classList.contains("bonus-food-1"))
+            {
+                squares[bonusFoodIndex1].classList.remove("bonus-food-1");
+                bonusFoodIndex1=-1;
+            }
         }, 7000);
     }
 
-    if(foodIndex % 5 == 0 && !squares[bonusFoodIndex2].classList.contains("bonus-food-2"))
+    if(foodIndex % 5 == 0 && bonusFoodIndex2 == -1)
     {
         do {
             bonusFoodIndex2=Math.floor(Math.random() * squares.length);
@@ -116,8 +128,12 @@ function generateFood()
 
         squares[bonusFoodIndex2].classList.add("bonus-food-2");
 
-        setTimeout(() => {
-            squares[bonusFoodIndex2].classList.remove("bonus-food-2");
+        bonusFoodIndex2TimerID=setTimeout(() => {
+            if(squares[bonusFoodIndex2].classList.contains("bonus-food-2"))
+            {
+                squares[bonusFoodIndex2].classList.remove("bonus-food-2");
+                bonusFoodIndex2=-1
+            }
         }, 7000);
     }
 }
@@ -200,6 +216,9 @@ function snakeMovement()
         else if(squares[snake[1]].classList.contains("bonus-food-1")) // WHEN THE SNAKE EATS BONUS FOOD 1
         {
             squares[snake[1]].classList.remove("bonus-food-1");
+            bonusFoodIndex1=-1;
+            tempBonusFoodIndex1=-1; // THIS VARIABLE IS NEEDED AFTER RESUMING THE GAME
+            clearTimeout(bonusFoodIndex1TimerID);
             // THE LENGTH OF THE SNAKE WILL GET REDUCED BY 4
             let removedPart=0;
             if(snake.length >= 6)
@@ -217,6 +236,9 @@ function snakeMovement()
         else if(squares[snake[1]].classList.contains("bonus-food-2")) // WHEN THE SNAKE EATS BONUS FOOD 2
         {
             squares[snake[1]].classList.remove("bonus-food-2");
+            bonusFoodIndex2=-1;
+            tempBonusFoodIndex2=-1; // THIS VARIABLE IS NEEDED AFTER RESUMING THE GAME
+            clearTimeout(bonusFoodIndex2TimerID);
             snake.push(snakeTail);
             squares[snakeTail].classList.add("snake");
 
@@ -225,7 +247,8 @@ function snakeMovement()
 
             clearInterval(timerID);
             timerID=null;
-            // THE SPEED OF THE SNAKE WILL GET REDUCED BY 2 TIMES OF SPEEDFACTOR
+            // THE SPEED OF THE SNAKE WILL BE DECREASED BY 3 TIMES OF SPEEDFACTOR
+            timeInterval=Math.floor(timeInterval / speedFactor);
             timeInterval=Math.floor(timeInterval / speedFactor);
             timeInterval=Math.floor(timeInterval / speedFactor);
             timerID=setInterval(snakeMovement, timeInterval);
@@ -246,6 +269,22 @@ function gameOver()
     isGameOver=true;
     clearInterval(timerID);
     timerID=null;
+    clearTimeout(bonusFoodIndex1TimerID);
+    clearTimeout(bonusFoodIndex2TimerID);
+    bonusFoodIndex1TimerID=null;
+    bonusFoodIndex2TimerID=null;
+
+    if(tempTimer1 != null)
+    {
+        clearTimeout(tempTimer1);
+        tempTimer1=null;
+    }
+    if(tempTimer2 != null)
+    {
+        clearTimeout(tempTimer2);
+        tempTimer2;
+    }
+
     displayScore.innerHTML+=" Game Over !!!";
 
     highScore=getHighScoreFromCookie();
@@ -269,6 +308,25 @@ startOrPauseBtn.addEventListener("click", () => {
     {
         clearInterval(timerID);
         timerID=null;
+
+        if(tempTimer1 != null)
+        {
+            clearTimeout(tempTimer1);
+            tempTimer1=null;
+        }
+        if(tempTimer2 != null)
+        {
+            clearTimeout(tempTimer2);
+            tempTimer2;
+        }
+
+        tempBonusFoodIndex1=bonusFoodIndex1;
+        tempBonusFoodIndex2=bonusFoodIndex2;
+
+        clearTimeout(bonusFoodIndex1TimerID);
+        clearTimeout(bonusFoodIndex2TimerID);
+        bonusFoodIndex1TimerID=null;
+        bonusFoodIndex2TimerID=null;
     }
     else
     {
@@ -276,6 +334,34 @@ startOrPauseBtn.addEventListener("click", () => {
         {
             newGame();
             isGameOver=false;
+        }
+        else
+        {
+            tempTimer1=setTimeout(() => {
+                if(tempBonusFoodIndex1 != -1)
+                {
+                    if(squares[tempBonusFoodIndex1].classList.contains("bonus-food-1"))
+                    {
+                        squares[tempBonusFoodIndex1].classList.remove("bonus-food-1");
+                        bonusFoodIndex1=-1;
+                        tempBonusFoodIndex1=-1;
+                        tempTimer1=null;
+                    }
+                }
+            }, 7000);
+
+            tempTimer2=setTimeout(() => {
+                if(tempBonusFoodIndex2 != -1)
+                {
+                    if(squares[tempBonusFoodIndex2].classList.contains("bonus-food-2"))
+                    {
+                        squares[tempBonusFoodIndex2].classList.remove("bonus-food-2");
+                        bonusFoodIndex2=-1;
+                        tempBonusFoodIndex2=-1;
+                        tempTimer2=null;
+                    }
+                }
+            }, 7000);
         }
         timerID=setInterval(snakeMovement, timeInterval);
     }
@@ -320,7 +406,7 @@ infoBtn.addEventListener("click", () => {
         "Blue Berry -\n" +
         "Points: 16, Length: Decreases by 4, Time: 7 Seconds.\n" +
         "Violet Berry -\n" +
-        "Points: 32, Speed: Decreases by 2, Length: Increases by 1, Time: 7 Seconds."
+        "Points: 32, Speed: Decreases by 3, Length: Increases by 1, Time: 7 Seconds."
     );
 });
 
