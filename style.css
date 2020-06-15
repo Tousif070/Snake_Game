@@ -41,18 +41,34 @@ h2 {
 
 .snake {
     background-color: #228B22;
+    width: 6px;
+    height: 6px;
+    border: 2px solid #3DCE3D;
+    border-radius: 3px;
 }
 
 .food {
     background-color: #CD5C5C;
+    width: 6px;
+    height: 6px;
+    border: 2px solid #F4A460;
+    border-radius: 6px;
 }
 
 .bonus-food-1 {
     background-color: #6495ED;
+    width: 6px;
+    height: 6px;
+    border: 2px solid #87CEFA;
+    border-radius: 6px;
 }
 
 .bonus-food-2 {
     background-color: #EE82EE;
+    width: 6px;
+    height: 6px;
+    border: 2px solid #FFA9FF;
+    border-radius: 6px;
 }
 
 .table-for-buttons {
@@ -127,6 +143,34 @@ h2 {
     .grid-blocks {
         width: 20px;
         height: 20px;
+    }
+
+    .snake {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #3DCE3D;
+        border-radius: 6px;
+    }
+
+    .food {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #F4A460;
+        border-radius: 12px;
+    }
+
+    .bonus-food-1 {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #87CEFA;
+        border-radius: 12px;
+    }
+
+    .bonus-food-2 {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #FFA9FF;
+        border-radius: 12px;
     }
 
 }

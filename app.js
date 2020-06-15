@@ -56,40 +56,43 @@ function newGame()
 // CONTROLLING THE SNAKE WITH KEYBOARD ARROW KEYS
 function control(e)
 {
-    previousKeyPressTime=keyPressTime;
-    let time=new Date();
-    keyPressTime=time.getTime();
+    if(timerID != null)
+    {
+        previousKeyPressTime=keyPressTime;
+        let time=new Date();
+        keyPressTime=time.getTime();
 
-    if(e.keyCode == 37) // LEFT ARROW KEY
-    {
-        if(direction != 1)
+        if(e.keyCode == 37) // LEFT ARROW KEY
         {
-            previousDirection=direction;
-            direction=-1;
+            if(direction != 1)
+            {
+                previousDirection=direction;
+                direction=-1;
+            }
         }
-    }
-    else if(e.keyCode == 38) // UP ARROW KEY
-    {
-        if(direction != width)
+        else if(e.keyCode == 38) // UP ARROW KEY
         {
-            previousDirection=direction;
-            direction=-width;
+            if(direction != width)
+            {
+                previousDirection=direction;
+                direction=-width;
+            }
         }
-    }
-    else if(e.keyCode == 39) // RIGHT ARROW KEY
-    {
-        if(direction != -1)
+        else if(e.keyCode == 39) // RIGHT ARROW KEY
         {
-            previousDirection=direction;
-            direction=1;
+            if(direction != -1)
+            {
+                previousDirection=direction;
+                direction=1;
+            }
         }
-    }
-    else if(e.keyCode == 40) // DOWN ARROW KEY
-    {
-        if(direction != -width)
+        else if(e.keyCode == 40) // DOWN ARROW KEY
         {
-            previousDirection=direction;
-            direction=width;
+            if(direction != -width)
+            {
+                previousDirection=direction;
+                direction=width;
+            }
         }
     }
 }
@@ -368,34 +371,46 @@ startOrPauseBtn.addEventListener("click", () => {
 });
 
 leftBtn.addEventListener("click", () => {
-    if(direction != 1)
+    if(timerID != null)
     {
-        previousDirection=direction;
-        direction=-1;
+        if(direction != 1)
+        {
+            previousDirection=direction;
+            direction=-1;
+        }
     }
 });
 
 upBtn.addEventListener("click", () => {
-    if(direction != width)
+    if(timerID != null)
     {
-        previousDirection=direction;
-        direction=-width;
+        if(direction != width)
+        {
+            previousDirection=direction;
+            direction=-width;
+        }
     }
 });
 
 rightBtn.addEventListener("click", () => {
-    if(direction != -1)
+    if(timerID != null)
     {
-        previousDirection=direction;
-        direction=1;
+        if(direction != -1)
+        {
+            previousDirection=direction;
+            direction=1;
+        }
     }
 });
 
 downBtn.addEventListener("click", () => {
-    if(direction != -width)
+    if(timerID != null)
     {
-        previousDirection=direction;
-        direction=width;
+        if(direction != -width)
+        {
+            previousDirection=direction;
+            direction=width;
+        }
     }
 });
 
