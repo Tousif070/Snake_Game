@@ -316,11 +316,11 @@ downBtn.addEventListener("click", () => {
 infoBtn.addEventListener("click", () => {
     alert(
         "Brown Berry -\n" +
-        "Points: 4, Speed: Increase by + 1, Length: Increase by + 1.\n" +
+        "Points: 4, Speed: Increases by 1, Length: Increases by 1.\n" +
         "Blue Berry -\n" +
-        "Points: 16, Length: Decrease by - 4, Time: 7 Seconds.\n" +
+        "Points: 16, Length: Decreases by 4, Time: 7 Seconds.\n" +
         "Violet Berry -\n" +
-        "Points: 32, Speed: Decrease by + 2, Length: Increase by + 1, Time: 7 Seconds."
+        "Points: 32, Speed: Decreases by 2, Length: Increases by 1, Time: 7 Seconds."
     );
 });
 
