@@ -404,6 +404,10 @@ startOrPauseBtn.addEventListener("click", () => {
 leftBtn.addEventListener("click", () => {
     if(timerID != null)
     {
+        previousKeyPressTime=keyPressTime;
+        let time=new Date();
+        keyPressTime=time.getTime();
+
         if(direction != 1)
         {
             previousDirection=direction;
@@ -415,6 +419,10 @@ leftBtn.addEventListener("click", () => {
 upBtn.addEventListener("click", () => {
     if(timerID != null)
     {
+        previousKeyPressTime=keyPressTime;
+        let time=new Date();
+        keyPressTime=time.getTime();
+
         if(direction != width)
         {
             previousDirection=direction;
@@ -426,6 +434,10 @@ upBtn.addEventListener("click", () => {
 rightBtn.addEventListener("click", () => {
     if(timerID != null)
     {
+        previousKeyPressTime=keyPressTime;
+        let time=new Date();
+        keyPressTime=time.getTime();
+
         if(direction != -1)
         {
             previousDirection=direction;
@@ -437,6 +449,10 @@ rightBtn.addEventListener("click", () => {
 downBtn.addEventListener("click", () => {
     if(timerID != null)
     {
+        previousKeyPressTime=keyPressTime;
+        let time=new Date();
+        keyPressTime=time.getTime();
+
         if(direction != -width)
         {
             previousDirection=direction;
