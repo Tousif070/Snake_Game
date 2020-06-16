@@ -38,7 +38,7 @@ const infoBtn=document.getElementById("infoBtn");
 // FOR STARTING A NEW GAME
 function newGame()
 {
-    snake.forEach(value => squares[value].classList.remove("snake"));
+    squares.forEach( (value, index) => squares[index].classList.remove("snake"));
     squares.forEach((value, index) => squares[index].classList.remove("food", "bonus-food-1", "bonus-food-2"));
     score=0;
     displayScore.innerHTML=score;
@@ -185,7 +185,12 @@ function doubleKeyPresses()
         let snakeTail=snake.pop();
         squares[snakeTail].classList.remove("snake");
         snake.unshift(snake[0] + previousDirection);
-        squares[snake[0]].classList.add("snake");
+
+        // REMOVES THE BUG OF THE SNAKE TRYING TO PASS THROUGH THE TOP OR BOTTOM WALL THAT MAY HAPPEN FOR PRESSING TWO KEYS WITHIN A SPECIFIC TIME INTERVAL
+        if(!(snake[0] < 0 || snake[0] >= squares.length))
+        {
+            squares[snake[0]].classList.add("snake");
+        }
     }
 }
 
@@ -199,7 +204,33 @@ function snakeMovement()
         let snakeTail=snake.pop();
         squares[snakeTail].classList.remove("snake");
         snake.unshift(snake[0] + direction);
-        squares[snake[0]].classList.add("snake");
+
+        // REMOVES THE BUG OF THE SNAKE TRYING TO PASS THROUGH THE TOP OR BOTTOM WALL THAT MAY HAPPEN FOR PRESSING TWO KEYS WITHIN A SPECIFIC TIME INTERVAL
+        if(!(snake[0] < 0 || snake[0] >= squares.length))
+        {
+            squares[snake[0]].classList.add("snake");
+        }
+        else
+        {
+            gameOver();
+            return;
+        }
+
+
+        // REMOVES THE BUG OF THE SNAKE TYING TO PASS THROUGH THE LEFT OR RIGHT WALL THAT MAY HAPPEN FOR PRESSING TWO KEYS WITHIN A SPECIFIC TIME INTERVAL
+        if(snake[0] % width == 0 && snake[1] % width == 0 && snake[2] % width == (width - 1))
+        {
+            squares[snake[0]].classList.remove("snake");
+            squares[snake[1]].classList.remove("snake");
+            gameOver();
+        }
+        else if(snake[0] % width == (width - 1) && snake[1] % width == (width - 1) && snake[2] % width == 0)
+        {
+            squares[snake[0]].classList.remove("snake");
+            squares[snake[1]].classList.remove("snake");
+            gameOver();
+        }
+
 
         if(squares[snake[1]].classList.contains("food")) // WHEN THE SNAKE EATS NORMAL FOOD
         {
